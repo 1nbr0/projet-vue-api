@@ -8,11 +8,64 @@
   <title>Projet Vue API</title>
 </head>
 <body>
-  <div class="lg:content-auto">
+  <div class="lg:content-auto" id="loadApi">
     <h1>Hello API</h1>
+    <template v-for="data in datas">
+      <input
+        type="radio"
+        :id="data"
+        :value="data"
+        name="data"
+        v-model="currentData"
+      />
+      <label :for="data">{{ data }}</label>
+    </template>
   </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue@3"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    const apiURL =
+      "https://swapi.dev/api/people";
+    const config = {
+    };
+
+    Vue.createApp({
+      data() {
+        return {
+          datas: ["people", "starships"],
+          currentData: "people",
+        };
+      },
+
+      created: function () {
+        this.fetchDataAsync()
+      },
+
+      watch: {
+        currentBranch: "fetchDataAsync",
+      },
+      methods: {
+        fetchDataAsync: async function () {
+        	try {
+          	const response = await axios.get(apiURL + this.currentBranch, config)
+        	  console.log(response.data)
+        	  this.commits = response.data
+                // console.log(self.commits[0].html_url);
+          } catch(error) {
+            console.log(error);
+          }
+        },
+        formattedMessage: function (message) {
+          const newline = message.indexOf("\n");
+          return newline > 0 ? message.slice(0, newline) : message;
+        },
+        formattedDate: function (date) {
+          return date.replace(/T|Z/g, " ");
+        },
+      },
+    }).mount("#loadApi");
+
     tailwind.config = {
       theme: {
         extend: {
