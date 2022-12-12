@@ -13,21 +13,33 @@
       <h1>Hello API</h1>
     </div>
     <div class="flex">
-      <template v-for="data in datas">
+      <template v-for="choice in choices">
         <div class="flex items-center pl-4 pr-4 rounded border border-gray-200 dark:border-gray-700 mr-4">
-          <!-- <input id="bordered-radio-1" type="radio" value="" name="bordered-radio" >
-          <label for="bordered-radio-1" >Default radio</label> -->
             <input
             type="radio"
-            :id="data"
-            :value="data"
-            name="data"
-            v-model="currentData"
+            :id="choice"
+            :value="choice"
+            name="choice"
+            v-model="currentChoice"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
-          <label :for="data" class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">{{ data }}</label>
+          <label :for="choice" class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">{{ choice }}</label>
         </div>
       </template>
+    </div>
+    <div class="flex">
+      <a v-for="data in datas" href="#" class="flex flex-col items-center bg-white border rounded-lg shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+        <div class="flex flex-col justify-between p-4 leading-normal">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ data.name }}</h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Taille : {{ data.height }} <br>
+            Poids : {{ data.mass }} <br>
+            Couleur des yeux : {{ data.eye_color }} <br>
+            Couleur de cheveux : {{ data.hair_color }} <br>
+            Date de naissance : {{ data.birth_year }} <br>
+            </p>
+        </div>
+      </a>
     </div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -42,8 +54,9 @@
     Vue.createApp({
       data() {
         return {
-          datas: ["people", "starships"],
-          currentData: "people",
+          choices: ["people", "starships"],
+          currentChoice: "people",
+          datas: null,
         };
       },
 
@@ -52,14 +65,14 @@
       },
 
       watch: {
-        currentData: "fetchDataAsync",
+        currentChoice: "fetchDataAsync",
       },
       methods: {
         fetchDataAsync: async function () {
         	try {
-          	const response = await axios.get(apiURL + this.currentData, config)
-        	  console.log(response.data)
-        	  this.commits = response.data
+          	const response = await axios.get(apiURL + this.currentChoice, config)
+        	  console.log(response.data.results)
+        	  this.datas = response.data.results
                 // console.log(self.commits[0].html_url);
           } catch(error) {
             console.log(error);
