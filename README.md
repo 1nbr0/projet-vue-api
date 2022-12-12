@@ -10,4 +10,6 @@
 - dernier commit à 12h00 pile au plus tard ;
 
 ------------------------
+- L'API utilisé en question : https://swapi.dev/api/
+
 ### BON TRAVAIL !
