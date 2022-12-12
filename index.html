@@ -9,24 +9,33 @@
 </head>
 <body>
   <div class="lg:content-auto" id="loadApi">
-    <h1>Hello API</h1>
-    <template v-for="data in datas">
-      <input
-        type="radio"
-        :id="data"
-        :value="data"
-        name="data"
-        v-model="currentData"
-      />
-      <label :for="data">{{ data }}</label>
-    </template>
+    <div>
+      <h1>Hello API</h1>
+    </div>
+    <div class="flex">
+      <template v-for="data in datas">
+        <div class="flex items-center pl-4 pr-4 rounded border border-gray-200 dark:border-gray-700 mr-4">
+          <!-- <input id="bordered-radio-1" type="radio" value="" name="bordered-radio" >
+          <label for="bordered-radio-1" >Default radio</label> -->
+            <input
+            type="radio"
+            :id="data"
+            :value="data"
+            name="data"
+            v-model="currentData"
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label :for="data" class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">{{ data }}</label>
+        </div>
+      </template>
+    </div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/vue@3"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     const apiURL =
-      "https://swapi.dev/api/people";
+      "https://swapi.dev/api/";
     const config = {
     };
 
@@ -43,12 +52,12 @@
       },
 
       watch: {
-        currentBranch: "fetchDataAsync",
+        currentData: "fetchDataAsync",
       },
       methods: {
         fetchDataAsync: async function () {
         	try {
-          	const response = await axios.get(apiURL + this.currentBranch, config)
+          	const response = await axios.get(apiURL + this.currentData, config)
         	  console.log(response.data)
         	  this.commits = response.data
                 // console.log(self.commits[0].html_url);
