@@ -9,9 +9,6 @@
 </head>
 <body>
   <div class="lg:content-auto" id="loadApi">
-    <div>
-      <h1>Hello API</h1>
-    </div>
     <div class="flex">
       <template v-for="choice in choices">
         <div class="flex items-center pl-4 pr-4 rounded border border-gray-200 dark:border-gray-700 mr-4">
@@ -27,19 +24,32 @@
         </div>
       </template>
     </div>
-    <div class="flex flex-col justify-center items-center">
-      <a v-for="data in datas" class="flex flex-col items-center mb-2 bg-white border rounded-lg shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div class="grid gap-4 grid-cols-3 grid-rows-3">
+      <div v-for="data in datas" class="mb-2 ml-2 mr-2 mt-2 bg-white border rounded-lg shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div class="flex flex-col justify-between p-4 leading-normal">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ data.name }}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Taille : {{ data.height }} <br>
-            Poids : {{ data.mass }} <br>
-            Couleur des yeux : {{ data.eye_color }} <br>
-            Couleur de cheveux : {{ data.hair_color }} <br>
-            Date de naissance : {{ data.birth_year }} <br>
-            </p>
+              <p v-if="currentChoice == 'people'" class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                Taille : {{ data.height }} <br>
+                Poids : {{ data.mass }} <br>
+                Couleur des yeux : {{ data.eye_color }} <br>
+                Couleur de cheveux : {{ data.hair_color }} <br>
+                Date de naissance : {{ data.birth_year }} <br>
+              </p>
+              <p v-if="currentChoice == 'starships'" class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                Taille : {{ data.length }} <br>
+                Modèle : {{ data.model }} <br>
+                Manufacturier : {{ data.manufacturer }} <br>
+                Prix : {{ data.cost_in_credits }} <br>
+                Vitesse atmosphérique maximale : {{ data.max_atmosphering_speed }} <br>
+                Équipage : {{ data.crew }} <br>
+                Nb passagers : {{ data.passengers }} <br>
+                Capacité de chargement : {{ data.cargo_capacity }} <br>
+                Consommables : {{ data.consumables }} <br>
+                Évaluation de l'hyperdrive : {{ data.hyperdrive_rating }} <br>
+                Classification vaisseau : {{ data.starship_class }} <br>
+              </p>
         </div>
-      </a>
+      </div>
     </div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -71,9 +81,7 @@
         fetchDataAsync: async function () {
         	try {
           	const response = await axios.get(apiURL + this.currentChoice, config)
-        	  console.log(response.data.results)
         	  this.datas = response.data.results
-                // console.log(self.commits[0].html_url);
           } catch(error) {
             console.log(error);
           }

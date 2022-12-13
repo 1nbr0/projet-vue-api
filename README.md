@@ -12,4 +12,12 @@
 ------------------------
 - L'API utilisé en question : https://swapi.dev/api/
 
+------------------------
+## Second Job
+-------------------------
+Objectifs : 
+
+- (1) pour chaque app des membres du groupe, rendre l'app fonctionnelle, nettoyer le code et rendre l'UI un peu jolie.
+- (2) choisir une des apps et lui ajouter des fonctionnalités un peu plus avancées que de juste afficher des éléments du flux API reçu. 
+
 ### BON TRAVAIL !
